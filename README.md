@@ -1,10 +1,10 @@
-#PadhAI -  Prompt-to-Lecture Generator
+# PadhAI -  Prompt-to-Lecture Generator
 
-A VS Code-like interface for generating educational lectures with synchronized animations and narration using AI.
+An interface for generating educational lectures with synchronized animations and narration using AI.
 
 ## Features
 
-- **VS Code-inspired UI**: Three-panel layout with sidebar, video player, and chat interface
+- **Friendly UI**: Three-panel layout with sidebar, video player, and chat interface
 - **AI-Generated Content**: Uses Groq API (OSS model) to generate Manim code and narration scripts
 - **Manim Animations**: Automatically generates educational animations for STEM topics
 - **TTS**: Browser Web Speech API (free)
