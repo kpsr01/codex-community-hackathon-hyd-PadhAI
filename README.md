@@ -1,4 +1,4 @@
-# Prompt-to-Lecture Generator
+#PadhAI -  Prompt-to-Lecture Generator
 
 A VS Code-like interface for generating educational lectures with synchronized animations and narration using AI.
 
