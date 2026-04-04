@@ -1,16 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "description": "Express API for PadhAI lecture generation, source processing, and narrated video assembly.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/runAll.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "axios": "^1.11.0",
     "cors": "^2.8.5",

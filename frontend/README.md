@@ -1,12 +1,30 @@
-# React + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend is a React + Vite workspace for submitting lecture requests, reviewing generated videos, and studying with transcripts, quizzes, and flashcards.
 
-Currently, two official plugins are available:
+## Main UI Areas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Sources panel for prompts, uploads, and lecture history
+- Video stage for loading, playback, and warning states
+- Learning tools panel for transcript, quiz, and flashcards
+- Theme toggle and keyboard-accessible navigation helpers
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd frontend
+npm install
+```
+
+## Scripts
+
+- `npm run dev` starts the Vite dev server
+- `npm run build` creates a production bundle
+- `npm run preview` previews the production build
+- `npm run lint` runs ESLint
+
+## API Dependency
+
+The app expects the backend API at `http://localhost:3001`.
+
+If you change the backend host, update `API_BASE` in [`src/App.jsx`](src/App.jsx).

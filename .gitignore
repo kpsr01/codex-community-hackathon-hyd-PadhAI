@@ -22,6 +22,9 @@ coverage/
 frontend/dist/
 backend/temp/
 
+# Local planning / test scaffolding
+PLAN.md
+
 # IDE/editor
 .vscode/
 .idea/
@@ -31,8 +34,7 @@ Thumbs.db
 # Env files
 .env
 *.env
-backend/.env
-backend/.env.local
+*.env.local
 
 # Python / Manim artifacts
 __pycache__/
@@ -45,11 +47,13 @@ __pycache__/
 # Generated media/videos
 backend/videos/*.mp4
 !backend/videos/README.md
+backend/audio/*.wav
+backend/audio/*.json
 
 # Misc
 *.swp
 .lock-wscript
 
 # Reports
-report-*.
+report-*
 

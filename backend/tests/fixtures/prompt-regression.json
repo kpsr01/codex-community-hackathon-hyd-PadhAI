@@ -1,0 +1,41 @@
+[
+  {
+    "name": "text-only",
+    "req": { "body": { "prompt": "Explain inertia" }, "files": [] },
+    "extractionSources": [],
+    "expectedInputMode": "text_only"
+  },
+  {
+    "name": "pdf-only",
+    "req": { "body": { "prompt": "" }, "files": [{ "mimetype": "application/pdf", "size": 100, "originalname": "notes.pdf" }] },
+    "extractionSources": [
+      { "type": "pdf", "name": "notes.pdf", "rawText": "Newton's first law states...", "confidence": 0.9, "provenance": { "kind": "pdf_extract", "index": 0, "filename": "notes.pdf" }, "warnings": [] }
+    ],
+    "expectedInputMode": "pdf_only"
+  },
+  {
+    "name": "image-only",
+    "req": { "body": { "prompt": "" }, "files": [{ "mimetype": "image/png", "size": 100, "originalname": "page1.png" }] },
+    "extractionSources": [
+      { "type": "image", "name": "page1.png", "rawText": "Cell membrane controls transport.", "confidence": 0.7, "provenance": { "kind": "image_ocr", "index": 0, "filename": "page1.png" }, "warnings": [] }
+    ],
+    "expectedInputMode": "image_only"
+  },
+  {
+    "name": "prompt-plus-pdf",
+    "req": { "body": { "prompt": "Focus on exam-level derivations" }, "files": [{ "mimetype": "application/pdf", "size": 100, "originalname": "derivations.pdf" }] },
+    "extractionSources": [
+      { "type": "pdf", "name": "derivations.pdf", "rawText": "Derivation details with symbols: F = m*a", "confidence": 0.8, "provenance": { "kind": "pdf_extract", "index": 0, "filename": "derivations.pdf" }, "warnings": [] }
+    ],
+    "expectedInputMode": "mixed"
+  },
+  {
+    "name": "low-confidence-ocr",
+    "req": { "body": { "prompt": "" }, "files": [{ "mimetype": "image/jpeg", "size": 100, "originalname": "scan.jpg" }] },
+    "extractionSources": [
+      { "type": "image", "name": "scan.jpg", "rawText": "Thermodynamics first law roughly says energy is conserved.", "confidence": 0.1, "provenance": { "kind": "image_ocr", "index": 0, "filename": "scan.jpg" }, "warnings": ["Low OCR confidence"] }
+    ],
+    "extractionWarnings": ["Low OCR confidence"],
+    "expectedInputMode": "image_only"
+  }
+]

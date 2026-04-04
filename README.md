@@ -1,186 +1,126 @@
-# PadhAI -  Prompt-to-Lecture Generator
+# PadhAI
 
-An interface for generating educational lectures with synchronized animations and narration using AI.
+PadhAI is a full-stack app that turns a study prompt, PDF, or image set into a narrated lecture video with supporting study materials.
 
-## Features
+The current stack is:
 
-- **Friendly UI**: Three-panel layout with sidebar, video player, and chat interface
-- **AI-Generated Content**: Uses Groq API (OSS model) to generate Manim code and narration scripts
-- **Manim Animations**: Automatically generates educational animations for STEM topics
-- **TTS**: Browser Web Speech API (free)
-- **Video Output**: Combines animations with narration for complete lecture videos
-- **Keyboard Shortcuts**: Enter to submit, Shift+Enter for new line
+- `frontend/`: React 19 + Vite workspace
+- `backend/`: Express API that normalizes requests, extracts source context, calls OpenAI, renders Manim, and muxes narration into the final video
 
-## Project Structure
+## What It Does
 
+- Accepts prompt-only, file-only, or mixed input
+- Extracts reusable source context from PDFs and images
+- Generates a lecture script and Manim scene plan
+- Renders an MP4 lecture and stitches server-side narration into it
+- Returns quiz and flashcard artifacts alongside the lecture
+- Keeps recent lecture history in browser storage
+
+## Repository Layout
+
+```text
+padhai/
+|-- frontend/                 React client
+|   |-- public/              Static assets
+|   `-- src/                 App and UI components
+|-- backend/                  Express API and generation pipeline
+|   |-- routes/              HTTP handlers
+|   |-- services/            OpenAI, audio, pipeline, and runtime services
+|   |-- tests/               Backend regression and contract checks
+|   |-- audio/               Ignored runtime narration output
+|   `-- videos/              Ignored runtime lecture output
+|-- .gitignore
+`-- README.md
 ```
-gpt-open-hack/
-├── frontend/          # React + Vite frontend
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Sidebar.jsx      # Left panel - chat history
-│   │   │   ├── VideoPlayer.jsx  # Center panel - video player
-│   │   │   └── ChatPanel.jsx    # Right panel - prompt input
-│   │   └── App.jsx
-│   └── package.json
-├── backend/           # Node.js + Express backend
-│   ├── routes/
-│   │   └── generate.js          # Main API endpoint
-│   ├── videos/                  # Generated video files
-│   └── index.js
-└── README.md
-```
 
-## Setup Instructions
+## Prerequisites
 
-### Prerequisites
+- Node.js 20+
+- Python with Manim installed and available on `PATH`
+- `ffmpeg` and `ffprobe` on `PATH`
+- An OpenAI API key with access to the configured models
 
-1. **Node.js** (v20+)
-2. **Python** with **Manim** installed:
-   ```bash
-   pip install manim
-   ```
-3. **Groq API Key** (or adapt back to OpenRouter)
+## Local Setup
 
-### Installation
+1. Install backend dependencies:
 
-1. **Clone and setup**:
-   ```bash
-   cd gpt-open-hack
-   ```
-
-2. **Setup Backend**:
    ```bash
    cd backend
    npm install
-   copy .env.example .env   # (Windows PowerShell; use cp on macOS/Linux)
-   # Edit .env and add your GROQ_API_KEY
+   copy .env.example .env
    ```
 
-3. **Setup Frontend**:
+2. Fill in `backend/.env`.
+
+3. Install frontend dependencies:
+
    ```bash
    cd ../frontend
    npm install
    ```
 
-### Configuration
+## Environment Variables
 
-1. **Get Groq API Key**:
-   - Visit https://console.groq.com/
-   - Create an API key
+Use [`backend/.env.example`](backend/.env.example) as the source of truth. The required values are:
 
-2. **Configure Backend** (`backend/.env`):
-   ```env
-   PORT=3001
-   GROQ_API_KEY=your_key_here
-   ```
+```env
+PORT=3001
+OPENAI_API_KEY=replace_with_your_openai_key
+OPENAI_CORE_MODEL=gpt-5.4
+OPENAI_LECTURE_TIMEOUT_MS=180000
+OPENAI_TTS_MODEL=gpt-4o-mini-tts-2025-12-15
+OPENAI_TTS_VOICE=marin
+OPENAI_STORE_RESPONSES=false
+```
 
-**Note**: TTS is handled automatically by your browser - no additional setup required!
+Optional overrides:
 
-### Running the Application
+- `FFMPEG_PATH`
+- `FFPROBE_PATH`
 
-1. **Start Backend** (Terminal 1):
-   ```bash
-   cd backend
-   npm start
-   ```
+## Running The App
 
-2. **Start Frontend** (Terminal 2):
-   ```bash
-   cd frontend
-   npm run dev
-   ```
+Start the backend:
 
-3. **Open Browser**:
-   - Navigate to `http://localhost:5173`
+```bash
+cd backend
+npm start
+```
 
-## Usage
+Start the frontend in a second terminal:
 
-1. **Enter a Prompt**: In the right panel, enter a topic like:
-   - "Explain Newton's laws of motion with visual examples"
-   - "Teach calculus derivatives with animated graphs"
-   - "Show how electromagnetic waves work"
+```bash
+cd frontend
+npm run dev
+```
 
-2. **Generate Lecture**: Click "Generate Lecture" to create:
-   - Manim animation code
-   - Narration script
-   - Combined video output
+Open `http://localhost:5173`.
 
-3. **View Results**: 
-   - Video plays in center panel
-   - Chat history appears in left panel
-   - Click previous chats to replay videos
+## Verification
 
-## Technical Details
+Backend tests:
 
-### Frontend (React + Vite)
-- **Components**: Modular React components for each panel
-- **Styling**: VS Code-inspired dark theme with CSS
-- **State Management**: React hooks for managing video and chat state
+```bash
+cd backend
+npm test
+```
 
-### Backend (Node.js + Express)
-- **API Endpoint**: `/api/generate` - handles lecture generation
-- **LLM Integration**: Groq API for content generation (model: `openai/gpt-oss-120b`)
-- **Manim Execution**: Runs Python scripts to generate animations
-- **File Serving**: Static file serving for generated videos
+Frontend production build:
 
-### AI Integration
-- **Model**: `openai/gpt-oss-120b` via Groq
-- **Prompt Engineering**: "Maestro" system prompt producing shot-based timeline JSON (title, manim_header, scenes[shots], manim_footer)
-- **Output Format**: JSON transformed into executable Manim scene
+```bash
+cd frontend
+npm run build
+```
 
-## Free Services Used
+Frontend lint:
 
-- **Groq**: Fast OSS model inference API
-- **Browser TTS**: Web Speech API for text-to-speech
-- **Local Manim**: Community edition for animations
-- **Local Storage**: Browser memory for chat history
+```bash
+cd frontend
+npm run lint
+```
 
-## Troubleshooting
+## Notes For GitHub
 
-### Common Issues
-
-1. **Manim not found**:
-   ```bash
-   pip install manim
-   # or
-   conda install -c conda-forge manim
-   ```
-
-2. **API Key errors**:
-   - Check `.env` file exists in `backend/`
-   - Verify `GROQ_API_KEY` is correct
-   - If switching back to OpenRouter, adjust endpoint & env var in `routes/generate.js`
-
-3. **Port conflicts**:
-   - Backend runs on port 3001
-   - Frontend runs on port 5173
-   - Change ports in config if needed
-
-### Development Notes
-
-- Backend includes fallback responses for offline development
-- Minimal guardrails (prompt length + pattern filtering) applied before execution
-- For production consider sandboxing Manim (Docker, seccomp, etc.)
-
-## Future Enhancements
-
-- [ ] Real TTS streaming integration
-- [ ] Audio + video mux (ffmpeg) for packaged lectures
-- [ ] Template library of common pedagogy animations
-- [ ] Persistent storage for prompts & metadata
-- [ ] Authentication / multi-user support
-- [ ] Docker sandbox / safer code execution
-- [ ] CI (lint, type, minimal unit test)
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Test locally
-5. Submit pull request
-
-## License
-
-MIT License - see LICENSE file for details.
+- Runtime-generated videos, audio files, temp output, env files, and dependency folders are git-ignored.
+- The repo keeps lightweight README files inside generated-output folders so the expected directory structure is preserved.
+- The frontend and backend each have their own README for implementation-specific details.
