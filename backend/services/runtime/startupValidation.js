@@ -1,5 +1,6 @@
 const { spawnSync } = require('child_process');
 
+const { FIVE_MINUTES_MS } = require('../../config/timeouts');
 const { getOpenAIConfig } = require('../openai/apiClient');
 
 function resolveBinary(envVar, fallback) {
@@ -9,7 +10,7 @@ function resolveBinary(envVar, fallback) {
 function ensureBinary(binaryPath, args = ['-version']) {
   const result = spawnSync(binaryPath, args, {
     encoding: 'utf8',
-    timeout: 15000
+    timeout: FIVE_MINUTES_MS
   });
 
   if (result.error || result.status !== 0) {

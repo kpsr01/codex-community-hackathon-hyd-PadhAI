@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
+const { FIVE_MINUTES_MS } = require('../../config/timeouts');
 const { synthesizeSpeech } = require('../openai/apiClient');
 
 const AUDIO_SAMPLE_RATE = 24000;
@@ -227,9 +228,38 @@ function runCommand(command, args, options = {}) {
       cwd: options.cwd || process.cwd(),
       stdio: ['ignore', 'pipe', 'pipe']
     });
+    const timeoutMs = options.timeoutMs || FIVE_MINUTES_MS;
 
     let stdout = '';
     let stderr = '';
+    let timedOut = false;
+    let settled = false;
+
+    const cleanup = () => {
+      if (timer) clearTimeout(timer);
+    };
+
+    const finishResolve = (value) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve(value);
+    };
+
+    const finishReject = (error) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      reject(error);
+    };
+
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill('SIGTERM');
+      setTimeout(() => {
+        if (!settled) child.kill('SIGKILL');
+      }, 1000);
+    }, timeoutMs);
 
     child.stdout.on('data', (chunk) => {
       stdout += chunk.toString();
@@ -239,13 +269,19 @@ function runCommand(command, args, options = {}) {
       stderr += chunk.toString();
     });
 
-    child.on('error', reject);
+    child.on('error', (error) => {
+      finishReject(error);
+    });
     child.on('close', (code) => {
-      if (code === 0) {
-        resolve({ stdout, stderr });
+      if (timedOut) {
+        finishReject(new Error(`${command} timed out after ${Math.round(timeoutMs / 60000)} minutes.`));
         return;
       }
-      reject(new Error(stderr.trim() || `${command} exited with code ${code}`));
+      if (code === 0) {
+        finishResolve({ stdout, stderr });
+        return;
+      }
+      finishReject(new Error(stderr.trim() || `${command} exited with code ${code}`));
     });
   });
 }

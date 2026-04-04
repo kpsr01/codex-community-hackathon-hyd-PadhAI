@@ -149,15 +149,26 @@
   --text-secondary: #a0a0a0;
   --text-tertiary: #707070;
   --text-inverse: #1a1a1a;
+  --text-link: #8ab4f8;
+
+  --accent-blue-soft: rgba(66, 133, 244, 0.2);
+  --accent-green-soft: rgba(52, 168, 83, 0.2);
+  --accent-amber-soft: rgba(251, 188, 4, 0.18);
+  --accent-coral-soft: rgba(234, 67, 53, 0.2);
+  --accent-purple-soft: rgba(161, 66, 244, 0.2);
+  --accent-teal-soft: rgba(0, 137, 123, 0.2);
   
   --surface-card: #242424;
   --surface-card-hover: #2d2d2d;
   --surface-hover: rgba(255, 255, 255, 0.06);
   --surface-active: rgba(66, 133, 244, 0.15);
+  --surface-selected: rgba(66, 133, 244, 0.22);
+  --surface-overlay: rgba(0, 0, 0, 0.68);
   
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-default: rgba(255, 255, 255, 0.12);
   --border-strong: rgba(255, 255, 255, 0.2);
+  --shadow-glow: 0 0 0 3px rgba(66, 133, 244, 0.28);
 }
 
 /* ===== BASE RESET ===== */

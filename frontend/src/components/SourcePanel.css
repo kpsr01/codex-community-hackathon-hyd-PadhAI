@@ -64,25 +64,34 @@
   text-align: center;
   transition: all var(--transition-fast);
   cursor: pointer;
-  background: var(--bg-primary);
+  background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+  box-shadow: inset 0 1px 0 var(--border-subtle);
 }
 
 .upload-zone:hover {
   border-color: var(--accent-blue);
   background: var(--accent-blue-soft);
+  box-shadow: var(--shadow-sm);
 }
 
 .upload-zone.dragging {
   border-color: var(--accent-blue);
   background: var(--accent-blue-soft);
   border-style: solid;
+  box-shadow: var(--shadow-glow);
+}
+
+.upload-zone:focus-visible {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: var(--shadow-glow);
 }
 
 .upload-zone-icon {
   width: 40px;
   height: 40px;
   margin: 0 auto var(--space-2);
-  color: var(--text-tertiary);
+  color: var(--accent-blue);
 }
 
 .upload-zone-text {
@@ -113,16 +122,17 @@
   gap: var(--space-2);
   padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
   background: var(--accent-blue-soft);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-pill);
   font-size: var(--text-xs);
   color: var(--text-primary);
-  border: none;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .file-chip:hover {
   background: var(--accent-coral-soft);
+  border-color: var(--accent-coral);
 }
 
 .file-chip-name {

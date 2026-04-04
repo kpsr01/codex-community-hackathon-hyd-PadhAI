@@ -5,6 +5,7 @@ import SourcePanel from './components/SourcePanel'
 import VideoStage from './components/VideoStage'
 import LearningTools from './components/LearningTools'
 import { SkipLink, useKeyboardNav } from './components/Accessibility'
+import { fetchWithTimeout } from './lib/request'
 import './components/Accessibility.css'
 
 const API_BASE = 'http://localhost:3001'
@@ -153,12 +154,12 @@ function App() {
         files.forEach((file) => formData.append('files', file))
         formData.append('generateQuiz', String(generateQuiz))
         formData.append('generateFlashcards', String(generateFlashcards))
-        response = await fetch(`${API_BASE}/api/generate`, {
+        response = await fetchWithTimeout(`${API_BASE}/api/generate`, {
           method: 'POST',
           body: formData
         })
       } else {
-        response = await fetch(`${API_BASE}/api/generate`, {
+        response = await fetchWithTimeout(`${API_BASE}/api/generate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -228,7 +229,7 @@ function App() {
     }
 
     const artifactContext = currentLecture?.metadata?.artifactContext || buildFallbackArtifactContext(currentLecture)
-    const response = await fetch(`${API_BASE}/api/generate/artifacts`, {
+    const response = await fetchWithTimeout(`${API_BASE}/api/generate/artifacts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

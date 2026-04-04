@@ -3,6 +3,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const { FIVE_MINUTES_MS } = require('../config/timeouts');
 const { createStructuredResponse, getOpenAIConfig } = require('../services/openai/apiClient');
 const { normalizeGenerateRequest } = require('../services/pipeline/requestNormalizer');
 const { buildLectureContext } = require('../services/pipeline/contextBuilder');
@@ -14,7 +15,7 @@ const { synthesizeLectureAudio, muxLectureVideo } = require('../services/audio/l
 
 const router = express.Router();
 const LECTURE_MODEL = getOpenAIConfig().coreModel;
-const DEFAULT_LECTURE_TIMEOUT_MS = 180000;
+const DEFAULT_LECTURE_TIMEOUT_MS = FIVE_MINUTES_MS;
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -1510,14 +1511,14 @@ async function executeManimCode(manimCode, options = {}) {
     // Write Manim code to file
     fs.writeFileSync(pythonFile, cleanedCode);
     
-    // Execute Manim with correct syntax and shorter timeout
+    // Execute Manim with a consistent generation timeout ceiling
     const command = `manim "${pythonFile}" GeneratedScene -ql`;  // -ql = low quality
   // Execute
     
     try {
       const output = execSync(command, { 
         cwd: tempDir, 
-        timeout: 45000,  // 45 second timeout
+        timeout: FIVE_MINUTES_MS,
         stdio: 'pipe',   // Capture output
         encoding: 'utf8'
       });
