@@ -1,7 +1,7 @@
 # PadhAI
 PadhAI (पढाई - Hindi for 'Study') is a full-stack app that turns a study prompt, PDF, or image set into a narrated lecture video with supporting study materials.
 
-[![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkpsr01%2Fcodex-community-hackathon-hyd-PadhAI&count_bg=%2379C83D&title_bg=%23555555&title=Views&edge_flat=false)](https://hits.seeyoufarm.com)
+![Views](https://visitor-badge.laobi.icu/badge?page_id=kpsr01.codex-community-hackathon-hyd-PadhAI)
 
 ## Old Demo
 
