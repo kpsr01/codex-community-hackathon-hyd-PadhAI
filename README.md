@@ -1,22 +1,17 @@
 # PadhAI
-
-![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FYOUR_GITHUB_USERNAME%2FYOUR_REPO_NAME&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false)
-
 PadhAI (पढाई - Hindi for 'Study') is a full-stack app that turns a study prompt, PDF, or image set into a narrated lecture video with supporting study materials.
 
-## Demo
+[![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkpsr01%2Fcodex-community-hackathon-hyd-PadhAI&count_bg=%2379C83D&title_bg=%23555555&title=Views&edge_flat=false)](https://hits.seeyoufarm.com)
 
-Check out our [Old demo](https://www.youtube.com/watch?v=1nJk5PZ5esc) to see how PadhAI generates narrated lectures!
+## Old Demo
 
-## Stack
+[![Old Demo](https://img.youtube.com/vi/1nJk5PZ5esc/0.jpg)](https://www.youtube.com/watch?v=1nJk5PZ5esc)
 
 The current stack is:
-
 - `frontend/`: React 19 + Vite workspace
 - `backend/`: Express API that normalizes requests, extracts source context, calls OpenAI, renders Manim, and muxes narration into the final video
 
 ## What It Does
-
 - Accepts prompt-only, file-only, or mixed input
 - Extracts reusable source context from PDFs and images
 - Generates a lecture script and Manim scene plan
@@ -25,7 +20,6 @@ The current stack is:
 - Keeps recent lecture history in browser storage
 
 ## Repository Layout
-
 ```text
 padhai/
 |-- frontend/                 React client
@@ -42,35 +36,27 @@ padhai/
 ```
 
 ## Prerequisites
-
 - Node.js 20+
 - Python with Manim installed and available on `PATH`
 - `ffmpeg` and `ffprobe` on `PATH`
 - An OpenAI API key with access to the configured models
 
 ## Local Setup
-
 1. Install backend dependencies:
-
-   ```bash
+```bash
    cd backend
    npm install
    copy .env.example .env
-   ```
-
+```
 2. Fill in `backend/.env`.
-
 3. Install frontend dependencies:
-
-   ```bash
+```bash
    cd ../frontend
    npm install
-   ```
+```
 
 ## Environment Variables
-
 Use [`backend/.env.example`](backend/.env.example) as the source of truth. The required values are:
-
 ```env
 PORT=3001
 OPENAI_API_KEY=replace_with_your_openai_key
@@ -82,53 +68,40 @@ OPENAI_STORE_RESPONSES=false
 ```
 
 Optional overrides:
-
 - `FFMPEG_PATH`
 - `FFPROBE_PATH`
 
 ## Running The App
-
 Start the backend:
-
 ```bash
 cd backend
 npm start
 ```
-
 Start the frontend in a second terminal:
-
 ```bash
 cd frontend
 npm run dev
 ```
-
 Open `http://localhost:5173`.
 
 ## Verification
-
 Backend tests:
-
 ```bash
 cd backend
 npm test
 ```
-
 Frontend production build:
-
 ```bash
 cd frontend
 npm run build
 ```
-
 Frontend lint:
-
 ```bash
 cd frontend
 npm run lint
 ```
 
 ## Notes For GitHub
-
 - Runtime-generated videos, audio files, temp output, env files, and dependency folders are git-ignored.
 - The repo keeps lightweight README files inside generated-output folders so the expected directory structure is preserved.
 - The frontend and backend each have their own README for implementation-specific details.
