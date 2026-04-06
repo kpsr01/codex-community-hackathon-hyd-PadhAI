@@ -1,6 +1,14 @@
 # PadhAI
 
+![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FYOUR_GITHUB_USERNAME%2FYOUR_REPO_NAME&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false)
+
 PadhAI (पढाई - Hindi for 'Study') is a full-stack app that turns a study prompt, PDF, or image set into a narrated lecture video with supporting study materials.
+
+## Demo
+
+Check out our [Old demo](https://www.youtube.com/watch?v=1nJk5PZ5esc) to see how PadhAI generates narrated lectures!
+
+## Stack
 
 The current stack is:
 
