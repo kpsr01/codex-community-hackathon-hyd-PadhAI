@@ -2,7 +2,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { FIVE_MINUTES_MS } = require('../../config/timeouts');
+const { THIRTY_MINUTES_MS } = require('../../config/timeouts');
 
 const MAX_TOTAL_UPLOAD_BYTES = 20 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = new Set([
@@ -94,7 +94,7 @@ function tryRunPython(command, args, cwd) {
   return spawnSync(command, args, {
     cwd,
     encoding: 'utf8',
-    timeout: FIVE_MINUTES_MS,
+    timeout: THIRTY_MINUTES_MS,
     maxBuffer: 10 * 1024 * 1024
   });
 }

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const { FIVE_MINUTES_MS } = require('../../config/timeouts');
+const { THIRTY_MINUTES_MS } = require('../../config/timeouts');
 const { synthesizeSpeech } = require('../openai/apiClient');
 
 const AUDIO_SAMPLE_RATE = 24000;
@@ -228,7 +228,7 @@ function runCommand(command, args, options = {}) {
       cwd: options.cwd || process.cwd(),
       stdio: ['ignore', 'pipe', 'pipe']
     });
-    const timeoutMs = options.timeoutMs || FIVE_MINUTES_MS;
+    const timeoutMs = options.timeoutMs || THIRTY_MINUTES_MS;
 
     let stdout = '';
     let stderr = '';

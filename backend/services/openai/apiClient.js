@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { FIVE_MINUTES_MS } = require('../../config/timeouts');
+const { THIRTY_MINUTES_MS } = require('../../config/timeouts');
 
 const OPENAI_BASE_URL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const DEFAULT_RETRY_STATUS = new Set([408, 409, 429, 500, 502, 503, 504]);
@@ -187,7 +187,7 @@ async function createStructuredResponse(params, deps = {}) {
     const response = await postWithRetries(`${config.baseUrl}/responses`, payload, {
       requestConfig: {
         headers: buildHeaders(apiKey),
-        timeout: params.timeoutMs || FIVE_MINUTES_MS
+        timeout: params.timeoutMs || THIRTY_MINUTES_MS
       },
       maxAttempts: params.maxAttempts || 3
     }, deps);
@@ -222,7 +222,7 @@ async function synthesizeSpeech(params, deps = {}) {
     const response = await postWithRetries(`${config.baseUrl}/audio/speech`, payload, {
       requestConfig: {
         headers: buildHeaders(apiKey),
-        timeout: params.timeoutMs || FIVE_MINUTES_MS,
+        timeout: params.timeoutMs || THIRTY_MINUTES_MS,
         responseType: 'arraybuffer'
       },
       maxAttempts: params.maxAttempts || 3

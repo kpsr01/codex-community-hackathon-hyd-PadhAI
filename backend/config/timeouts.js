@@ -1,5 +1,5 @@
-const FIVE_MINUTES_MS = 5 * 60 * 1000;
+const THIRTY_MINUTES_MS = 30 * 60 * 1000;
 
 module.exports = {
-  FIVE_MINUTES_MS
+  THIRTY_MINUTES_MS
 };

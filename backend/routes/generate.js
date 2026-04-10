@@ -3,7 +3,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-const { FIVE_MINUTES_MS } = require('../config/timeouts');
+const { THIRTY_MINUTES_MS } = require('../config/timeouts');
 const { createStructuredResponse, getOpenAIConfig } = require('../services/openai/apiClient');
 const { normalizeGenerateRequest } = require('../services/pipeline/requestNormalizer');
 const { buildLectureContext } = require('../services/pipeline/contextBuilder');
@@ -15,7 +15,7 @@ const { synthesizeLectureAudio, muxLectureVideo } = require('../services/audio/l
 
 const router = express.Router();
 const LECTURE_MODEL = getOpenAIConfig().coreModel;
-const DEFAULT_LECTURE_TIMEOUT_MS = FIVE_MINUTES_MS;
+const DEFAULT_LECTURE_TIMEOUT_MS = THIRTY_MINUTES_MS;
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -1518,7 +1518,7 @@ async function executeManimCode(manimCode, options = {}) {
     try {
       const output = execSync(command, { 
         cwd: tempDir, 
-        timeout: FIVE_MINUTES_MS,
+        timeout: THIRTY_MINUTES_MS,
         stdio: 'pipe',   // Capture output
         encoding: 'utf8'
       });
